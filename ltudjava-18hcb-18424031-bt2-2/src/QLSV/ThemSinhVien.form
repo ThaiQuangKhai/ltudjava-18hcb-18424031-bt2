@@ -41,10 +41,6 @@
                       <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="184" max="-2" attributes="0"/>
-                      <Component id="bt_themsinhvien" min="-2" pref="110" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel6" linkSize="3" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -59,18 +55,24 @@
                           <Group type="103" alignment="0" groupAlignment="2" attributes="0">
                               <Component id="txt_mssv" linkSize="1" alignment="2" min="-2" pref="186" max="-2" attributes="0"/>
                               <Component id="txt_hoten" linkSize="1" alignment="2" min="-2" max="-2" attributes="0"/>
-                              <Component id="jtfCMND" linkSize="1" alignment="2" min="-2" max="-2" attributes="0"/>
+                              <Component id="txt_cmnd" linkSize="1" alignment="2" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                              <Component id="jrbSex1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jrb_nam" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
-                              <Component id="jrbgioitinh" min="-2" max="-2" attributes="0"/>
+                              <Component id="jrb_nu" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
+                      <Component id="bt_themsinhvien" min="-2" pref="110" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                      <Component id="bt_quayve" min="-2" pref="110" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace pref="117" max="32767" attributes="0"/>
+              <EmptySpace pref="102" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -91,14 +93,14 @@
               </Group>
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="2" attributes="0">
-                  <Component id="jrbSex1" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="jrbgioitinh" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="jrb_nam" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="jrb_nu" alignment="2" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel3" alignment="2" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel4" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jtfCMND" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txt_cmnd" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="2" attributes="0">
@@ -106,7 +108,10 @@
                   <Component id="jLabel6" linkSize="4" alignment="2" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="36" max="32767" attributes="0"/>
-              <Component id="bt_themsinhvien" min="-2" pref="35" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="bt_themsinhvien" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                  <Component id="bt_quayve" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -127,14 +132,14 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jtfCMND">
+    <Component class="javax.swing.JTextField" name="txt_cmnd">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Times New Roman" size="18" style="2"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="jrbSex1">
+    <Component class="javax.swing.JRadioButton" name="jrb_nam">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="btgSex"/>
@@ -146,7 +151,7 @@
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="jrbgioitinh">
+    <Component class="javax.swing.JRadioButton" name="jrb_nu">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="btgSex"/>
@@ -227,6 +232,14 @@
         </Property>
         <Property name="text" type="java.lang.String" value="TH&#xca;M SINH VI&#xca;N"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="bt_quayve">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Quay V&#x1ec1;"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_quayveActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

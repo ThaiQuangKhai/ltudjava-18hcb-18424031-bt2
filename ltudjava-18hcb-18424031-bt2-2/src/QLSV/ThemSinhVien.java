@@ -101,9 +101,9 @@ public class ThemSinhVien extends javax.swing.JDialog {
         buttonGroup3 = new javax.swing.ButtonGroup();
         txt_mssv = new javax.swing.JTextField();
         txt_hoten = new javax.swing.JTextField();
-        jtfCMND = new javax.swing.JTextField();
-        jrbSex1 = new javax.swing.JRadioButton();
-        jrbgioitinh = new javax.swing.JRadioButton();
+        txt_cmnd = new javax.swing.JTextField();
+        jrb_nam = new javax.swing.JRadioButton();
+        jrb_nu = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -112,6 +112,7 @@ public class ThemSinhVien extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
         jcb_lop = new javax.swing.JComboBox();
         jLabel7 = new javax.swing.JLabel();
+        bt_quayve = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Thêm sinh viên");
@@ -120,16 +121,16 @@ public class ThemSinhVien extends javax.swing.JDialog {
 
         txt_hoten.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
 
-        jtfCMND.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
+        txt_cmnd.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
 
-        btgSex.add(jrbSex1);
-        jrbSex1.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
-        jrbSex1.setText("Nam");
-        jrbSex1.setToolTipText("");
+        btgSex.add(jrb_nam);
+        jrb_nam.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
+        jrb_nam.setText("Nam");
+        jrb_nam.setToolTipText("");
 
-        btgSex.add(jrbgioitinh);
-        jrbgioitinh.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
-        jrbgioitinh.setText("Nữ");
+        btgSex.add(jrb_nu);
+        jrb_nu.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
+        jrb_nu.setText("Nữ");
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
         jLabel1.setText("MSSV:");
@@ -159,6 +160,13 @@ public class ThemSinhVien extends javax.swing.JDialog {
         jLabel7.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel7.setText("THÊM SINH VIÊN");
 
+        bt_quayve.setText("Quay Về");
+        bt_quayve.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_quayveActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -168,9 +176,6 @@ public class ThemSinhVien extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(138, 138, 138)
                         .addComponent(jLabel7))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(184, 184, 184)
-                        .addComponent(bt_themsinhvien, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(57, 57, 57)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,16 +190,21 @@ public class ThemSinhVien extends javax.swing.JDialog {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                                 .addComponent(txt_mssv, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txt_hoten, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jtfCMND, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txt_cmnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
-                                .addComponent(jrbSex1)
+                                .addComponent(jrb_nam)
                                 .addGap(51, 51, 51)
-                                .addComponent(jrbgioitinh)))))
-                .addContainerGap(117, Short.MAX_VALUE))
+                                .addComponent(jrb_nu))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(90, 90, 90)
+                        .addComponent(bt_themsinhvien, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57)
+                        .addComponent(bt_quayve, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jcb_lop, jtfCMND, txt_hoten, txt_mssv});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jcb_lop, txt_cmnd, txt_hoten, txt_mssv});
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel4, jLabel6});
 
@@ -213,23 +223,25 @@ public class ThemSinhVien extends javax.swing.JDialog {
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jrbSex1)
-                    .addComponent(jrbgioitinh)
+                    .addComponent(jrb_nam)
+                    .addComponent(jrb_nu)
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jtfCMND, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_cmnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jcb_lop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addComponent(bt_themsinhvien, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bt_themsinhvien, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bt_quayve, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jcb_lop, jtfCMND, txt_hoten, txt_mssv});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jcb_lop, txt_cmnd, txt_hoten, txt_mssv});
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel4, jLabel6});
 
@@ -238,51 +250,43 @@ public class ThemSinhVien extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bt_themsinhvienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_themsinhvienActionPerformed
-//        String mssv = txt_mssv.getText();
-//        String name = txt_hoten.getText();
-//        String cmnd = jtfCMND.getText();
-//        int sex = -1;
-//
-//        if (jrbSex1.isSelected()) {
-//            sex = 0;
-//        }
-//
-//        if (jrbgioitinh.isSelected()) {
-//            sex = 1;
-//        }
-//
-//        boolean validate = this.validateForm();
-//        if (!validate) {
-//            String nameClass = String.valueOf(jcb_lop.getItemAt(jcb_lop.getSelectedIndex()));
-//            ClassRoom cr = ClassRoomDAO.getClassRoom(nameClass);
-//            Student sd = new Student(mssv, name, sex, cmnd, cr);
-//
-//            boolean checkCreate = false;
-//            if (this.idCourse.equals("")) {
-//                checkCreate = StudentDAO.createStudent(sd);
-//
-//            } else {
-//                ClassRoomCourse crc = new ClassRoomCourse(className, idCourse, mssv);
-//                checkCreate = ClassRoomCourseDAO.addStudentInCourse(crc);
-//            }
-//
-//            if (checkCreate) {
-//                JOptionPane.showMessageDialog(null, "Thêm học sinh thành công.");
-//                txt_mssv.setText("");
-//                txt_hoten.setText("");
-//                jtfCMND.setText("");
-//            } else{
-//                JOptionPane.showMessageDialog(null, "Thêm học sinh không thành công.");
-//            } 
-//
-//        }
+        String mssv = txt_mssv.getText();
+        String hoten = txt_hoten.getText();
+        String cmnd = txt_cmnd.getText();
+        String gt;
+        if (jrb_nam.isSelected()) {
+            gt = jrb_nam.getText();
+        }else{
+            gt = jrb_nu.getText();
+        }
+        String malop = String.valueOf(jcb_lop.getItemAt(jcb_lop.getSelectedIndex()));
+        if (!malop.isEmpty()) {
+            String nameClass = String.valueOf(jcb_lop.getItemAt(jcb_lop.getSelectedIndex()));
+            SinhVien sv = new SinhVien(mssv, hoten, gt, cmnd, malop);
+            if(SinhVienDAO.createSinhVien(sv)==true)
+            {
+                JOptionPane.showMessageDialog(null, "Thêm học sinh thành công.");
+                txt_mssv.setText("");
+                txt_hoten.setText("");
+                txt_cmnd.setText("");
+            }else{
+                JOptionPane.showMessageDialog(null, "Thêm học sinh không thành công.");
+            }          
+        }
     }//GEN-LAST:event_bt_themsinhvienActionPerformed
+
+    private void bt_quayveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_quayveActionPerformed
+        // TODO add your handling code here:
+        QuanLyLop qll = new QuanLyLop();
+        qll.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_bt_quayveActionPerformed
 
   private boolean validateForm() {
         boolean validate = false;
         String mssv = txt_mssv.getText();
         String name = txt_hoten.getText();
-        String cmnd = jtfCMND.getText();
+        String cmnd = txt_cmnd.getText();
         StringBuilder msgErr = new StringBuilder();
 
         if (this.idCourse.equals("")) {
@@ -321,7 +325,7 @@ public class ThemSinhVien extends javax.swing.JDialog {
 
         }
 
-        if (jrbSex1.isSelected() == false && jrbgioitinh.isSelected() == false) {
+        if (jrb_nam.isSelected() == false && jrb_nu.isSelected() == false) {
             validate = true;
             msgErr.append("Vui lòng chọn giới tính");
             msgErr.append("\n");
@@ -343,54 +347,8 @@ public class ThemSinhVien extends javax.swing.JDialog {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ThemSinhVien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ThemSinhVien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ThemSinhVien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ThemSinhVien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -401,6 +359,7 @@ public class ThemSinhVien extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bt_quayve;
     private javax.swing.JButton bt_themsinhvien;
     private javax.swing.ButtonGroup btgSex;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -413,9 +372,9 @@ public class ThemSinhVien extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JComboBox jcb_lop;
-    private javax.swing.JRadioButton jrbSex1;
-    private javax.swing.JRadioButton jrbgioitinh;
-    private javax.swing.JTextField jtfCMND;
+    private javax.swing.JRadioButton jrb_nam;
+    private javax.swing.JRadioButton jrb_nu;
+    private javax.swing.JTextField txt_cmnd;
     private javax.swing.JTextField txt_hoten;
     private javax.swing.JTextField txt_mssv;
     // End of variables declaration//GEN-END:variables
