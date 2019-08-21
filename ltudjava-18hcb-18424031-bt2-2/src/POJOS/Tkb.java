@@ -9,7 +9,7 @@ package POJOS;
  *
  * @author DELL
  */
-public class Tkb  implements java.io.Serializable {
+public class Tkb  {//implements java.io.Serializable {
 
 
      private TkbId id;
@@ -50,10 +50,6 @@ public class Tkb  implements java.io.Serializable {
     public void setPhong(String phong) {
         this.phong = phong;
     }
-
-
-
-
 }
 
 

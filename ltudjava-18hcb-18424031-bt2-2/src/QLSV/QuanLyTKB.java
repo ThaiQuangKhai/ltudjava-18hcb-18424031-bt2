@@ -18,6 +18,7 @@ import DAO.LopDAO;
 import POJOS.Lop;
 import DAO.MonDAO;
 import POJOS.Mon;
+import javax.swing.DefaultComboBoxModel;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -39,8 +40,25 @@ public class QuanLyTKB extends javax.swing.JFrame {
      */
     public QuanLyTKB() {
         initComponents();
+        initLayoutlop();
     }
 
+    private void initLayoutlop() {
+        List<Lop> DSLop = LopDAO.getlistlop();
+        if(DSLop.size()>0)
+        {
+            DefaultComboBoxModel comboboxModel = new DefaultComboBoxModel();
+            //System.out.println("có");
+            for (Lop l : DSLop) {
+                Lop _l = LopDAO.getlop(l.getMalop());
+                comboboxModel.addElement(l.getMalop());
+            }
+            jcb_loptkb.setModel(comboboxModel);
+        } else 
+        {
+            jcb_loptkb.setModel(new javax.swing.DefaultComboBoxModel(new String[]{}));
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -197,7 +215,7 @@ public class QuanLyTKB extends javax.swing.JFrame {
 
     private void jcb_loptkbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_loptkbActionPerformed
         // TODO add your handling code here:
-        String malop =(String) jcb_lop.getSelectedItem();
+        String malop =(String) jcb_loptkb.getSelectedItem();
         if (!malop.equals("null")) {
             xemtkb(malop);
         } else {
@@ -273,9 +291,9 @@ public class QuanLyTKB extends javax.swing.JFrame {
                             }
                         }
                         JOptionPane.showMessageDialog(this, "Đã insert "+d+" môn.\nMôn chưa đưa vào:");
-                        GiaoVu gv = new GiaoVu();
-                        gv.setVisible(true);
-                        this.setVisible(false);
+//                        GiaoVu gv = new GiaoVu();
+//                        gv.setVisible(true);
+//                        this.setVisible(false);
                     }
                 }
                 
