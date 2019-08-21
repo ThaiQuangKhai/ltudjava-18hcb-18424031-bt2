@@ -44,7 +44,7 @@ Contributor(s):
   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="POJOS.Lop" table="lop" catalog="qlsinhvien" optimistic-lock="version">
+    <class name="POJOS.Lop" table="Lop" catalog="qlsinhvien" optimistic-lock="version">
         <id name="malop" type="string">
             <column name="MALOP" length="10" />
             <generator class="assigned" />

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 16, 2019 10:00:02 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="POJOS.Tkb" table="tkb" catalog="qlsinhvien" optimistic-lock="version">
+        <composite-id name="id" class="POJOS.TkbId">
+            <key-property name="malop" type="string">
+                <column name="MALOP" length="10" />
+            </key-property>
+            <key-property name="mamon" type="string">
+                <column name="MAMON" length="10" />
+            </key-property>
+        </composite-id>
+        <property name="tenmon" type="string">
+            <column name="TENMON" length="45" />
+        </property>
+        <property name="phong" type="string">
+            <column name="PHONG" length="45" />
+        </property>
+    </class>
+</hibernate-mapping>

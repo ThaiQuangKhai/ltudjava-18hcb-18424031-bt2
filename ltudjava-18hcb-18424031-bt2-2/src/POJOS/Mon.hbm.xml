@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 16, 2019 10:00:02 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="POJOS.Mon" table="mon" catalog="qlsinhvien" optimistic-lock="version">
+        <id name="mamon" type="string">
+            <column name="MAMON" length="10" />
+            <generator class="assigned" />
+        </id>
+        <property name="tenmon" type="string">
+            <column name="TENMON" length="45" />
+        </property>
+    </class>
+</hibernate-mapping>
