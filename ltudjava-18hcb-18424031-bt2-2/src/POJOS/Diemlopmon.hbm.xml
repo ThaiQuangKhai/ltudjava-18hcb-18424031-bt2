@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 16, 2019 10:00:02 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="POJOS.Diemlopmon" table="diemlopmon" catalog="qlsinhvien" optimistic-lock="version">
+        <composite-id name="id" class="POJOS.DiemlopmonId">
+            <key-property name="malop" type="string">
+                <column name="MALOP" length="10" />
+            </key-property>
+            <key-property name="mamon" type="string">
+                <column name="MAMON" length="10" />
+            </key-property>
+            <key-property name="mssv" type="string">
+                <column name="MSSV" length="8" />
+            </key-property>
+        </composite-id>
+        <property name="diemgk" type="java.lang.Float">
+            <column name="DIEMGK" precision="12" scale="0" />
+        </property>
+        <property name="diemck" type="java.lang.Float">
+            <column name="DIEMCK" precision="12" scale="0" />
+        </property>
+        <property name="diemkhac" type="java.lang.Float">
+            <column name="DIEMKHAC" precision="12" scale="0" />
+        </property>
+        <property name="diemtong" type="java.lang.Float">
+            <column name="DIEMTONG" precision="12" scale="0" />
+        </property>
+    </class>
+</hibernate-mapping>

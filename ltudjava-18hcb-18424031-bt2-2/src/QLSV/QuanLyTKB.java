@@ -18,6 +18,11 @@ import DAO.LopDAO;
 import POJOS.Lop;
 import DAO.MonDAO;
 import POJOS.Mon;
+import POJOS.Diemlopmon;
+import POJOS.DiemlopmonId;
+import DAO.DiemLopMonDAO;
+import DAO.SinhVienDAO;
+import POJOS.SinhVien;
 import javax.swing.DefaultComboBoxModel;
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -34,6 +39,9 @@ public class QuanLyTKB extends javax.swing.JFrame {
     private String[] columnNames = {
         "STT", "Mã Lớp", "Mã Môn", "Tên Môn", "Phòng"
     };
+    private String[] columnNames2 = {
+        "STT", "Mã sinh viên", "Họ Tên", "Giới Tính", "CMND"
+    };
     
     /**
      * Creates new form QuanLyTKB
@@ -41,6 +49,7 @@ public class QuanLyTKB extends javax.swing.JFrame {
     public QuanLyTKB() {
         initComponents();
         initLayoutlop();
+        initLayoutmon();
     }
 
     private void initLayoutlop() {
@@ -54,11 +63,31 @@ public class QuanLyTKB extends javax.swing.JFrame {
                 comboboxModel.addElement(l.getMalop());
             }
             jcb_loptkb.setModel(comboboxModel);
+            jcb_lop.setModel(comboboxModel);
         } else 
         {
             jcb_loptkb.setModel(new javax.swing.DefaultComboBoxModel(new String[]{}));
+            jcb_lop.setModel(new javax.swing.DefaultComboBoxModel(new String[]{}));
         }
     }
+    
+    private void initLayoutmon() {
+        List<Mon> DSmon = MonDAO.getlistmon();
+        if(DSmon.size()>0)
+        {
+            DefaultComboBoxModel comboboxModel = new DefaultComboBoxModel();
+            //System.out.println("có");
+            for (Mon m : DSmon) {
+                //Mon _m = MonDAO.getmon(m.getMamon());
+                comboboxModel.addElement(m.getMamon());
+            }
+            jcb_mon.setModel(comboboxModel);
+        } else 
+        {
+            jcb_mon.setModel(new javax.swing.DefaultComboBoxModel(new String[]{}));
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -81,6 +110,7 @@ public class QuanLyTKB extends javax.swing.JFrame {
         jcb_mon = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
         jcb_loptkb = new javax.swing.JComboBox();
+        bt_xem = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -119,6 +149,11 @@ public class QuanLyTKB extends javax.swing.JFrame {
 
         jcb_lop.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jcb_lop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcb_lop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcb_lopActionPerformed(evt);
+            }
+        });
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -150,6 +185,15 @@ public class QuanLyTKB extends javax.swing.JFrame {
             }
         });
 
+        bt_xem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_xem.setText("Xem Danh Sách");
+        bt_xem.setName("bt_xoasv"); // NOI18N
+        bt_xem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_xemActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -157,20 +201,22 @@ public class QuanLyTKB extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(12, 12, 12)
                         .addComponent(jcb_lop, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel7)
-                        .addGap(12, 12, 12)
-                        .addComponent(jcb_mon, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jcb_mon, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bt_xem)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bt_themsv)
                         .addGap(18, 18, 18)
                         .addComponent(bt_xoasv))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(bt_importtkb)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -199,7 +245,8 @@ public class QuanLyTKB extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(bt_xoasv)
                         .addComponent(bt_themsv)
-                        .addComponent(jLabel6)))
+                        .addComponent(jLabel6)
+                        .addComponent(bt_xem)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
                 .addGap(33, 33, 33))
@@ -219,10 +266,46 @@ public class QuanLyTKB extends javax.swing.JFrame {
         if (!malop.equals("null")) {
             xemtkb(malop);
         } else {
-            JOptionPane.showMessageDialog(null, "Chưa có danh sách lớp học.", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Chưa có thời khóa biểu.", "Notification", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jcb_loptkbActionPerformed
 
+    private void jcb_lopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_lopActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_lopActionPerformed
+
+    private void bt_xemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_xemActionPerformed
+        // TODO add your handling code here:
+        String malop =(String) jcb_lop.getSelectedItem();
+        String mamon =(String) jcb_mon.getSelectedItem();
+        if (!malop.equals("null")&&!mamon.equals("null")) {
+            xemtdssv(malop, mamon);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Chưa chọn mã lớp, mã môn.", "Notification", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_bt_xemActionPerformed
+
+    private void xemtdssv(String malop, String mamon)
+    {
+        int stt = 1;
+        List<SinhVien> dssv = DiemLopMonDAO.getlistsvlopmon(malop,mamon);
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.setColumnIdentifiers(columnNames2);
+        for (SinhVien sv : dssv) {
+            String[] rows = new String[5];
+            rows[0] = String.valueOf(stt);
+            rows[1] = sv.getMssv();
+            rows[2] = sv.getHoten();
+            rows[3] = sv.getGt();
+            rows[4] = sv.getCmnd();
+            tableModel.addRow(rows);
+            stt++;
+        }
+        jTable2.setModel(tableModel);
+    }
+    
     private void xemtkb(String malop) {
         int stt = 1;
         List<Tkb> dstkb = TkbDAO.getlisttkb(malop);
@@ -265,16 +348,16 @@ public class QuanLyTKB extends javax.swing.JFrame {
                 if((line = br.readLine()) != null)
                 {
                     String[] l = line.split(cvsSplitBy);
-                    String malop = l[0].toString();
-                    if(LopDAO.getlop(malop)!= null)
+                    //String malop = l[0].toString();
+                    if(LopDAO.getlop(l[0])!= null)
                     {
-                        JOptionPane.showMessageDialog(this, "Chưa insert lớp "+malop+".");
+                        JOptionPane.showMessageDialog(this, "Chưa insert lớp "+l[0]+".");
                     }
                     else
                     {
                         while ((line = br.readLine()) != null) {                   
                             String [] tkb = line.split(cvsSplitBy);
-                            TkbId id = new TkbId(malop, tkb[0]);
+                            TkbId id = new TkbId(tkb[3], tkb[0]);
                             Tkb kb=new Tkb(id, tkb[1], tkb[2]);
                             Mon m=new Mon(tkb[0], tkb[1]);
                             if(MonDAO.getmon(m.getMamon())==null)
@@ -282,8 +365,14 @@ public class QuanLyTKB extends javax.swing.JFrame {
                                 MonDAO.createmon(m);
                             }
                             if(TkbDAO.createtkb(kb)==true)
-                            {
-                                d++;       
+                            { 
+                                List<SinhVien> dssv = SinhVienDAO.getlistsv(tkb[3]);
+                                for (SinhVien sv : dssv) {
+                                    DiemlopmonId dlmid = new DiemlopmonId(tkb[3], tkb[0], sv.getMssv());
+                                    Diemlopmon dlm = new Diemlopmon(dlmid);
+                                    DiemLopMonDAO.createid(dlm);
+                                }
+                                d++;
                             }   
                             else
                             {
@@ -343,6 +432,7 @@ public class QuanLyTKB extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_importtkb;
     private javax.swing.JButton bt_themsv;
+    private javax.swing.JButton bt_xem;
     private javax.swing.JButton bt_xoasv;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
