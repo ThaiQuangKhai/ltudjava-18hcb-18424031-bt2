@@ -10,8 +10,16 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import DAO.DiemLopMonDAO;
+import DAO.LopDAO;
+import DAO.MonDAO;
 import POJOS.Diemlopmon;
 import POJOS.DiemlopmonId;
+import POJOS.Lop;
+import POJOS.Mon;
+
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -25,13 +33,52 @@ import POJOS.DiemlopmonId;
  */
 public class QuanLyDiem extends javax.swing.JFrame {
 
+    private String[] columnNames = {
+        "STT", "MSSV", "Họ Tên", "Điểm GK", "Điểm CK", "Điểm Khác", "Điểm Tổng", ""
+    };
     /**
      * Creates new form QuanLyDiem
      */
     public QuanLyDiem() {
         initComponents();
+        initLayoutlop();
+        initLayoutmon();
     }
 
+    private void initLayoutlop() {
+        List<Lop> DSLop = LopDAO.getlistlop();
+        if(DSLop.size()>0)
+        {
+            DefaultComboBoxModel comboboxModel = new DefaultComboBoxModel();
+            //System.out.println("có");
+            for (Lop l : DSLop) {
+                Lop _l = LopDAO.getlop(l.getMalop());
+                comboboxModel.addElement(l.getMalop());
+            }
+            jcb_lop.setModel(comboboxModel);
+        } else 
+        {
+            jcb_lop.setModel(new javax.swing.DefaultComboBoxModel(new String[]{}));
+        }
+    }
+    
+    private void initLayoutmon() {
+        List<Mon> DSmon = MonDAO.getlistmon();
+        if(DSmon.size()>0)
+        {
+            DefaultComboBoxModel comboboxModel = new DefaultComboBoxModel();
+            //System.out.println("có");
+            for (Mon m : DSmon) {
+                //Mon _m = MonDAO.getmon(m.getMamon());
+                comboboxModel.addElement(m.getMamon());
+            }
+            jcb_mon.setModel(comboboxModel);
+        } else 
+        {
+            jcb_mon.setModel(new javax.swing.DefaultComboBoxModel(new String[]{}));
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,15 +89,23 @@ public class QuanLyDiem extends javax.swing.JFrame {
     private void initComponents() {
 
         bt_import = new javax.swing.JButton();
-        jButton21 = new javax.swing.JButton();
+        bt_xemdiem = new javax.swing.JButton();
         jButton22 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jcbClass = new javax.swing.JComboBox();
+        jcb_lop = new javax.swing.JComboBox();
         jLabel7 = new javax.swing.JLabel();
-        jcbClass1 = new javax.swing.JComboBox();
+        jcb_mon = new javax.swing.JComboBox();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTable1 = new javax.swing.JTable();
         bt_quayve = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        txt_dau = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        txt_tldau = new javax.swing.JTextField();
+        txt_tlrot = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txt_rot = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,9 +118,14 @@ public class QuanLyDiem extends javax.swing.JFrame {
             }
         });
 
-        jButton21.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton21.setText("Xem Điểm");
-        jButton21.setName("bt_xemdiem"); // NOI18N
+        bt_xemdiem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_xemdiem.setText("Xem Điểm");
+        bt_xemdiem.setName("bt_xemdiem"); // NOI18N
+        bt_xemdiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_xemdiemActionPerformed(evt);
+            }
+        });
 
         jButton22.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton22.setText("Sửa Điểm");
@@ -74,16 +134,26 @@ public class QuanLyDiem extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Lớp:");
 
-        jcbClass.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jcbClass.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcb_lop.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jcb_lop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcb_lop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcb_lopActionPerformed(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Môn:");
 
-        jcbClass1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jcbClass1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcb_mon.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jcb_mon.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcb_mon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcb_monActionPerformed(evt);
+            }
+        });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -94,7 +164,7 @@ public class QuanLyDiem extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(jTable1);
 
         bt_quayve.setText("Quay Về");
         bt_quayve.addActionListener(new java.awt.event.ActionListener() {
@@ -103,6 +173,38 @@ public class QuanLyDiem extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jLabel3.setText("Số sinh viên đậu:");
+
+        txt_dau.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        txt_dau.setText("0");
+        txt_dau.setDoubleBuffered(true);
+        txt_dau.setEnabled(false);
+        txt_dau.setName(""); // NOI18N
+
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jLabel1.setText("Tỉ lệ:");
+
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jLabel2.setText("Tỉ lệ:");
+
+        txt_tldau.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        txt_tldau.setText("0");
+        txt_tldau.setEnabled(false);
+
+        txt_tlrot.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        txt_tlrot.setText("0");
+        txt_tlrot.setEnabled(false);
+
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jLabel4.setText("Số sinh viên rớt:");
+
+        txt_rot.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        txt_rot.setText("0");
+        txt_rot.setDoubleBuffered(true);
+        txt_rot.setEnabled(false);
+        txt_rot.setName(""); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -110,27 +212,47 @@ public class QuanLyDiem extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(bt_import)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bt_quayve)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jcbClass, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jcb_lop, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jcb_mon, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(bt_import)
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel3))
+                                .addGap(10, 10, 10)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txt_dau)
+                                    .addComponent(txt_rot))))
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jcbClass1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
-                        .addComponent(jButton21)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton22)
-                        .addGap(6, 6, 6))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 167, Short.MAX_VALUE)
+                                .addComponent(bt_xemdiem)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton22))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txt_tlrot))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txt_tldau, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(bt_quayve)))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,17 +260,27 @@ public class QuanLyDiem extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bt_import)
-                    .addComponent(bt_quayve))
-                .addGap(18, 18, 18)
+                    .addComponent(bt_quayve)
+                    .addComponent(jLabel3)
+                    .addComponent(txt_dau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(txt_tldau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton21)
+                    .addComponent(jLabel2)
+                    .addComponent(txt_tlrot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(txt_rot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bt_xemdiem)
                     .addComponent(jButton22)
                     .addComponent(jLabel6)
-                    .addComponent(jcbClass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcb_lop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
-                    .addComponent(jcbClass1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcb_mon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -167,6 +299,76 @@ public class QuanLyDiem extends javax.swing.JFrame {
         ChosseFile("Choose file import");
     }//GEN-LAST:event_bt_importActionPerformed
 
+    private void jcb_lopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_lopActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_lopActionPerformed
+
+    private void jcb_monActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_monActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jcb_monActionPerformed
+
+    private void bt_xemdiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_xemdiemActionPerformed
+        // TODO add your handling code here:
+        String malop =(String) jcb_lop.getSelectedItem();
+        String mamon =(String) jcb_mon.getSelectedItem();
+        if (!malop.equals("null")&&!mamon.equals("null")) {
+            xemdsdiem(malop, mamon);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Chưa chọn mã lớp, mã môn.", "Notification", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_bt_xemdiemActionPerformed
+
+    private void xemdsdiem(String malop, String mamon)
+    {
+        int stt = 1,d=0,r=0;
+        float tld=0,tlr=0;
+        List<Object[]> dsdlm = DiemLopMonDAO.getlistdiemlopmon(malop,mamon);
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.setColumnIdentifiers(columnNames);
+        if(dsdlm.size()>0)
+        {
+            for (Object[] dlm : dsdlm){
+                String[] rows = new String[8];
+                rows[0] = String.valueOf(stt);
+                rows[1] = dlm[0].toString();
+                rows[2] = dlm[1].toString();
+                rows[3] = dlm[2].toString();
+                rows[4] = dlm[3].toString();
+                rows[5] = dlm[4].toString();
+                rows[6] = dlm[5].toString();
+                if(Float.parseFloat(dlm[5].toString())>=5)
+                {
+                    rows[7] = "Đậu";
+                    d++;
+                }
+                else
+                {
+                    rows[7] = "Rớt";
+                    r++;
+                }
+                tableModel.addRow(rows);
+                stt++;
+            }
+            jTable1.setModel(tableModel);
+            txt_dau.setText(String.valueOf(d));
+            txt_rot.setText(String.valueOf(r));
+            tld=(d * 100) / dsdlm.size();
+            tlr=100-tld;
+//            tlr=(d * (float)100) / dsdlm.size();
+//            tld=(float) Math.round(tlr * 10) / 10;
+//            tlr=100-tld;
+            txt_tldau.setText(String.valueOf(tld)+"%");
+            txt_tlrot.setText(String.valueOf(tlr)+"%");
+        }
+        else
+        {
+            jTable1.setModel(tableModel);
+        }
+    }
+    
     private void ChosseFile(String choose_file_import) {
         JFileChooser fileChooser = new JFileChooser();
         //fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
@@ -256,13 +458,21 @@ public class QuanLyDiem extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_import;
     private javax.swing.JButton bt_quayve;
-    private javax.swing.JButton jButton21;
+    private javax.swing.JButton bt_xemdiem;
     private javax.swing.JButton jButton22;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JComboBox jcbClass;
-    private javax.swing.JComboBox jcbClass1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JComboBox jcb_lop;
+    private javax.swing.JComboBox jcb_mon;
+    private javax.swing.JTextField txt_dau;
+    private javax.swing.JTextField txt_rot;
+    private javax.swing.JTextField txt_tldau;
+    private javax.swing.JTextField txt_tlrot;
     // End of variables declaration//GEN-END:variables
 }

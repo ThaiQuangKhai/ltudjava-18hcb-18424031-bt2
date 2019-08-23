@@ -54,6 +54,23 @@ public class DiemLopMonDAO {
         return listsv;
     }
     
+    public static List<Object[]> getlistdiemlopmon(String malop, String mamon) {
+        Session session = Controller.getSessionFactory().openSession();
+        List<Object[]> listsv = null;
+        try {
+            //String hql = "from Diemlopmon lmsv, SinhVien sv";
+            //String hql = "from Diemlopmon lmsv, SinhVien sv where lmsv.malop='"+malop+"' and lmsv.mamon='"+mamon+"' and sv.mssv=lmsv.mssv";
+            String hql = "select dlm.id.mssv, sv.hoten, dlm.diemgk, dlm.diemck, dlm.diemkhac, dlm.diemtong from Diemlopmon dlm, SinhVien sv where dlm.id.malop='"+malop+"' and dlm.id.mamon='"+mamon+"' and dlm.id.mssv=sv.mssv";
+            Query query = session.createQuery(hql);
+            listsv = query.list();
+        } catch (HibernateException ex) {
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return listsv;
+    }
+    
     public static boolean create(Diemlopmon dlm) {
         Session session = Controller.getSessionFactory().openSession();
         Transaction transaction = null;
