@@ -54,12 +54,12 @@ public class DiemLopMonDAO {
         return listsv;
     }
     
-    public static boolean createid(Diemlopmon id) {
+    public static boolean create(Diemlopmon dlm) {
         Session session = Controller.getSessionFactory().openSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            session.save(id);
+            session.save(dlm);
             transaction.commit();
         } catch (HibernateException ex) {
             transaction.rollback();
@@ -67,7 +67,59 @@ public class DiemLopMonDAO {
         } finally {
             session.close();
         }
-
         return true;
+    }
+    
+    public static boolean update(Diemlopmon dlm) {
+        Session session = Controller.getSessionFactory().openSession();
+        if(DiemLopMonDAO.getid(dlm) == null) {
+            return false;
+        }
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.update(dlm);
+            transaction.commit();
+        } catch (HibernateException ex) {
+            transaction.rollback();
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return true;
+    }
+    
+    public static boolean ktid(Diemlopmon dlm) {
+        Session session = Controller.getSessionFactory().openSession();
+        if(DiemLopMonDAO.getid(dlm) == null) {
+            return false;
+        }
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.update(dlm);
+            transaction.commit();
+        } catch (HibernateException ex) {
+            transaction.rollback();
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return true;
+    }
+    
+    public static Diemlopmon getid(Diemlopmon dlm) {
+        Session session = Controller.getSessionFactory().openSession();
+        Diemlopmon lopmonsv = null;
+        try {
+            String hql = "select lmsv from Diemlopmon lmsv where lmsv.malop='"+dlm.getId().getMalop()+"' and lmsv.mamon='"+dlm.getId().getMamon()+"' and lmsv.mssv='"+dlm.getId().getMssv()+"'";
+            Query query = session.createQuery(hql);
+            lopmonsv = (Diemlopmon) query.uniqueResult();
+        } catch (HibernateException ex) {
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return lopmonsv;
     }
 }
