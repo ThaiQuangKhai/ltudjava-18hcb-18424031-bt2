@@ -51,11 +51,11 @@
                       </Group>
                       <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jcb_lop" linkSize="1" alignment="1" pref="181" max="32767" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="2" attributes="0">
                               <Component id="txt_mssv" linkSize="1" alignment="2" min="-2" pref="186" max="-2" attributes="0"/>
                               <Component id="txt_hoten" linkSize="1" alignment="2" min="-2" max="-2" attributes="0"/>
                               <Component id="txt_cmnd" linkSize="1" alignment="2" min="-2" max="-2" attributes="0"/>
+                              <Component id="jcb_lop" alignment="2" min="-2" pref="185" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
@@ -72,7 +72,7 @@
                       <Component id="bt_quayve" min="-2" pref="110" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="102" max="32767" attributes="0"/>
+              <EmptySpace pref="72" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -103,11 +103,11 @@
                   <Component id="txt_cmnd" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="2" attributes="0">
-                  <Component id="jcb_lop" linkSize="2" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel6" linkSize="4" alignment="2" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel6" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jcb_lop" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="36" max="32767" attributes="0"/>
+              <EmptySpace pref="40" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="bt_themsinhvien" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                   <Component id="bt_quayve" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
@@ -210,21 +210,6 @@
         <Property name="text" type="java.lang.String" value="M&#xe3; l&#x1edb;p:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="jcb_lop">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Times New Roman" size="18" style="0"/>
-        </Property>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
-            <StringItem index="0" value="Item 1"/>
-            <StringItem index="1" value="Item 2"/>
-            <StringItem index="2" value="Item 3"/>
-            <StringItem index="3" value="Item 4"/>
-          </StringArray>
-        </Property>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -239,6 +224,24 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_quayveActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="jcb_lop">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Times New Roman" size="18" style="0"/>
+        </Property>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="Item 1"/>
+            <StringItem index="1" value="Item 2"/>
+            <StringItem index="2" value="Item 3"/>
+            <StringItem index="3" value="Item 4"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcb_lopActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

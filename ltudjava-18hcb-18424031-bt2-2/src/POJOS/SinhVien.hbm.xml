@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
 <!--
 DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 
@@ -39,13 +38,28 @@ made subject to such option by the copyright holder.
 
 Contributor(s):
 -->
-<hibernate-reverse-engineering>
-  <schema-selection match-catalog="qlsinhvien"/>
-  <table-filter match-name="taophuckhaodiem"/>
-  <table-filter match-name="xinphuckhaodiem"/>
-  <table-filter match-name="diemlopmon"/>
-  <table-filter match-name="mon"/>
-  <table-filter match-name="sinhvien"/>
-  <table-filter match-name="lop"/>
-  <table-filter match-name="account"/>
-</hibernate-reverse-engineering>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="POJOS.SinhVien" table="sinhvien" catalog="qlsinhvien" optimistic-lock="version">
+        <id name="mssv" type="string">
+            <column name="MSSV" length="10" />
+            <generator class="assigned" />
+        </id>
+        <property name="hoten" type="string">
+            <column name="HOTEN" length="45" not-null="true" />
+        </property>
+        <property name="gt" type="string">
+            <column name="GIOITINH" not-null="true" />
+        </property>
+        <property name="cmnd" type="string">
+            <column name="CMND" length="10" not-null="true" />
+        </property>
+        <property name="malop" type="string">
+            <column name="MALOP" length="10" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -27,15 +27,20 @@ public class SinhVien extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton25 = new javax.swing.JButton();
+        bt_xemdiem = new javax.swing.JButton();
         bt_doimatkhau = new javax.swing.JButton();
-        jButton24 = new javax.swing.JButton();
+        bt_dangxuat = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton25.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton25.setText("Xem Điểm");
-        jButton25.setName("bt_xemdiem"); // NOI18N
+        bt_xemdiem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_xemdiem.setText("Xem Điểm");
+        bt_xemdiem.setName("bt_xemdiem"); // NOI18N
+        bt_xemdiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_xemdiemActionPerformed(evt);
+            }
+        });
 
         bt_doimatkhau.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         bt_doimatkhau.setText("Đổi Mật Khẩu");
@@ -46,9 +51,14 @@ public class SinhVien extends javax.swing.JFrame {
             }
         });
 
-        jButton24.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton24.setText("Xin Phúc Khảo Điểm");
-        jButton24.setName("bt_xinpkdiem"); // NOI18N
+        bt_dangxuat.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_dangxuat.setText("Đăng Xuất");
+        bt_dangxuat.setName("bt_doimk"); // NOI18N
+        bt_dangxuat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_dangxuatActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -57,21 +67,21 @@ public class SinhVien extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bt_doimatkhau, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton24, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
-                    .addComponent(jButton25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(bt_dangxuat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bt_doimatkhau, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+                    .addComponent(bt_xemdiem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(24, 24, 24))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton24)
-                .addGap(18, 18, 18)
-                .addComponent(jButton25)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addGap(21, 21, 21)
+                .addComponent(bt_xemdiem)
+                .addGap(21, 21, 21)
                 .addComponent(bt_doimatkhau)
-                .addContainerGap())
+                .addGap(21, 21, 21)
+                .addComponent(bt_dangxuat)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
@@ -84,13 +94,27 @@ public class SinhVien extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_bt_doimatkhauActionPerformed
 
+    private void bt_xemdiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_xemdiemActionPerformed
+        // TODO add your handling code here:
+        SinhVienXemDiem svxd = new SinhVienXemDiem();
+        svxd.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_bt_xemdiemActionPerformed
+
+    private void bt_dangxuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_dangxuatActionPerformed
+        // TODO add your handling code here:
+        DangNhap dn = new DangNhap();
+        dn.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_bt_dangxuatActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bt_dangxuat;
     private javax.swing.JButton bt_doimatkhau;
-    private javax.swing.JButton jButton24;
-    private javax.swing.JButton jButton25;
+    private javax.swing.JButton bt_xemdiem;
     // End of variables declaration//GEN-END:variables
 }

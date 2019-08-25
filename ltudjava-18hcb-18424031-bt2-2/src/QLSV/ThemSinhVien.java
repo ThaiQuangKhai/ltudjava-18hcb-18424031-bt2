@@ -6,13 +6,16 @@
 package QLSV;
 
 
+import DAO.AccountDAO;
 import DAO.LopDAO;
 import DAO.SinhVienDAO;
+import POJOS.Account;
 import POJOS.Lop;
 import POJOS.SinhVien;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import static QLSV.QuanLyLop.malop;
 
 
 /**
@@ -21,70 +24,25 @@ import javax.swing.JOptionPane;
  */
 public class ThemSinhVien extends javax.swing.JDialog {
 
-    private String className = "", idCourse = "";
-
     /**
      * Creates new form add
      */
     public ThemSinhVien() {
         initComponents();
-        init();
+        jcb_lop.setEnabled(false);
         initLayout();
     }
 
     private void initLayout() {
-        List<Lop> DSLop = LopDAO.getlistlop();
-        if(DSLop.size()>0)
-        {
-            DefaultComboBoxModel comboboxModel = new DefaultComboBoxModel();
-            //System.out.println("có");
-            for (Lop l : DSLop) {
-                Lop _l = LopDAO.getlop(l.getMalop());
-                comboboxModel.addElement(l.getMalop());
-            }
-            jcb_lop.setModel(comboboxModel);
-        } else 
-        {
-            jcb_lop.setModel(new javax.swing.DefaultComboBoxModel(new String[]{}));
-        }
+        DefaultComboBoxModel comboboxModel = new DefaultComboBoxModel();
+        comboboxModel.addElement(malop);
+        jcb_lop.setModel(comboboxModel);
     }
     
     /**
      *
      * @param _className
      */
-    public ThemSinhVien(String _className) {
-        this.className = _className;
-        initComponents();
-        init();
-        String title = "Thêm Mới Học Sinh " + _className;
-        //this.jLabel5.setText(title);
-    }
-
-    /**
-     *
-     * @param _className
-     * @param _idCourse
-     */
-    public ThemSinhVien(String _className, String _idCourse) {
-        this.className = _className;
-        this.idCourse = _idCourse;
-        initComponents();
-        init();
-        String title = "Thêm Mới Học Sinh " + _className + "-" + _idCourse;
-        //this.jLabel5.setText(title);
-    }
-
-    private void init() {
-        DefaultComboBoxModel model = new DefaultComboBoxModel();
-
-        if (this.idCourse.equals("")) {
-            model.addElement(this.className);
-        } else {
-            model.addElement(this.className + '-' + this.idCourse);
-        }
-        jcb_lop.setModel(model);
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -110,9 +68,9 @@ public class ThemSinhVien extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         bt_themsinhvien = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jcb_lop = new javax.swing.JComboBox();
         jLabel7 = new javax.swing.JLabel();
         bt_quayve = new javax.swing.JButton();
+        jcb_lop = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Thêm sinh viên");
@@ -154,9 +112,6 @@ public class ThemSinhVien extends javax.swing.JDialog {
         jLabel6.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
         jLabel6.setText("Mã lớp:");
 
-        jcb_lop.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jcb_lop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel7.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel7.setText("THÊM SINH VIÊN");
 
@@ -164,6 +119,14 @@ public class ThemSinhVien extends javax.swing.JDialog {
         bt_quayve.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_quayveActionPerformed(evt);
+            }
+        });
+
+        jcb_lop.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jcb_lop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcb_lop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcb_lopActionPerformed(evt);
             }
         });
 
@@ -186,11 +149,11 @@ public class ThemSinhVien extends javax.swing.JDialog {
                             .addComponent(jLabel2))
                         .addGap(32, 32, 32)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jcb_lop, javax.swing.GroupLayout.Alignment.TRAILING, 0, 181, Short.MAX_VALUE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                                 .addComponent(txt_mssv, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txt_hoten, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txt_cmnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txt_cmnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jcb_lop, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addComponent(jrb_nam)
@@ -201,10 +164,10 @@ public class ThemSinhVien extends javax.swing.JDialog {
                         .addComponent(bt_themsinhvien, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(57, 57, 57)
                         .addComponent(bt_quayve, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jcb_lop, txt_cmnd, txt_hoten, txt_mssv});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txt_cmnd, txt_hoten, txt_mssv});
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel4, jLabel6});
 
@@ -231,17 +194,17 @@ public class ThemSinhVien extends javax.swing.JDialog {
                     .addComponent(jLabel4)
                     .addComponent(txt_cmnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jcb_lop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jcb_lop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bt_themsinhvien, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bt_quayve, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jcb_lop, txt_cmnd, txt_hoten, txt_mssv});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txt_cmnd, txt_hoten, txt_mssv});
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel4, jLabel6});
 
@@ -251,27 +214,35 @@ public class ThemSinhVien extends javax.swing.JDialog {
 
     private void bt_themsinhvienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_themsinhvienActionPerformed
         String mssv = txt_mssv.getText();
-        String hoten = txt_hoten.getText();
-        String cmnd = txt_cmnd.getText();
-        String gt;
-        if (jrb_nam.isSelected()) {
-            gt = jrb_nam.getText();
-        }else{
-            gt = jrb_nu.getText();
+        SinhVien sinhvien = SinhVienDAO.getSinhVien(mssv);
+        if (sinhvien != null) {
+            JOptionPane.showMessageDialog(null, "MSSV đã tồn tại.");
         }
-        String malop = String.valueOf(jcb_lop.getItemAt(jcb_lop.getSelectedIndex()));
-        if (!malop.isEmpty()) {
-            String nameClass = String.valueOf(jcb_lop.getItemAt(jcb_lop.getSelectedIndex()));
-            SinhVien sv = new SinhVien(mssv, hoten, gt, cmnd, malop);
-            if(SinhVienDAO.createSinhVien(sv)==true)
-            {
-                JOptionPane.showMessageDialog(null, "Thêm học sinh thành công.");
-                txt_mssv.setText("");
-                txt_hoten.setText("");
-                txt_cmnd.setText("");
+        else
+        {
+            String hoten = txt_hoten.getText();
+            String cmnd = txt_cmnd.getText();
+            String gt;
+            if (jrb_nam.isSelected()) {
+                gt = jrb_nam.getText();
             }else{
-                JOptionPane.showMessageDialog(null, "Thêm học sinh không thành công.");
-            }          
+                gt = jrb_nu.getText();
+            }
+            String malop = String.valueOf(jcb_lop.getItemAt(jcb_lop.getSelectedIndex()));
+            if (!malop.isEmpty()) {
+                String nameClass = String.valueOf(jcb_lop.getItemAt(jcb_lop.getSelectedIndex()));
+                SinhVien sv = new SinhVien(mssv, hoten, gt, cmnd, malop);
+                Account inserta =new Account(mssv, mssv);
+                if(SinhVienDAO.createSinhVien(sv)==true&&AccountDAO.createaccount(inserta)==true)
+                {
+                    JOptionPane.showMessageDialog(null, "Thêm sinh viên thành công.");
+                    txt_mssv.setText("");
+                    txt_hoten.setText("");
+                    txt_cmnd.setText("");
+                }else{
+                    JOptionPane.showMessageDialog(null, "Thêm sinh viên không thành công.");
+                }          
+            }
         }
     }//GEN-LAST:event_bt_themsinhvienActionPerformed
 
@@ -282,29 +253,16 @@ public class ThemSinhVien extends javax.swing.JDialog {
         this.setVisible(false);
     }//GEN-LAST:event_bt_quayveActionPerformed
 
+    private void jcb_lopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_lopActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_lopActionPerformed
+
   private boolean validateForm() {
         boolean validate = false;
         String mssv = txt_mssv.getText();
         String name = txt_hoten.getText();
         String cmnd = txt_cmnd.getText();
         StringBuilder msgErr = new StringBuilder();
-
-        if (this.idCourse.equals("")) {
-            SinhVien sinhvien = SinhVienDAO.getSinhVien(mssv);
-            if (sinhvien != null) {
-                msgErr.append("MSSV đã tồn tại.");
-                msgErr.append("\n");
-            }
-        } 
-//        else {
-//            ClassRoomCourse classRoomCourse = school.getClassRoomCourse(this.className, this.idCourse);
-//            for (SinhVien sinhVien : classRoomCourse.getListSinhVien()) {
-//                if (sinhVien.checkMSSV(mssv)) {
-//                    msgErr.append("MSSV đã tồn tại.");
-//                    msgErr.append("\n");
-//                }
-//            }
-//        }
 
         if (mssv.equals("")) {
             validate = true;

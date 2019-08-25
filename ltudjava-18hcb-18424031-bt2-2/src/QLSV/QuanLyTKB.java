@@ -24,6 +24,7 @@ import DAO.DiemLopMonDAO;
 import DAO.SinhVienDAO;
 import POJOS.SinhVien;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.TableModel;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -36,6 +37,9 @@ import javax.swing.DefaultComboBoxModel;
  */
 public class QuanLyTKB extends javax.swing.JFrame {
 
+    static String malop="";
+    static String mamon="";
+    static String mssv="";
     private String[] columnNames = {
         "STT", "Mã Lớp", "Mã Môn", "Tên Môn", "Phòng"
     };
@@ -111,6 +115,7 @@ public class QuanLyTKB extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jcb_loptkb = new javax.swing.JComboBox();
         bt_xem = new javax.swing.JButton();
+        bt_quayve = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -139,10 +144,20 @@ public class QuanLyTKB extends javax.swing.JFrame {
         bt_themsv.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         bt_themsv.setText("Thêm Sinh Viên");
         bt_themsv.setName("bt_themsv"); // NOI18N
+        bt_themsv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_themsvActionPerformed(evt);
+            }
+        });
 
         bt_xoasv.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         bt_xoasv.setText("Xóa Sinh Viên");
         bt_xoasv.setName("bt_xoasv"); // NOI18N
+        bt_xoasv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_xoasvActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Lớp:");
@@ -166,6 +181,11 @@ public class QuanLyTKB extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable2);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -173,6 +193,11 @@ public class QuanLyTKB extends javax.swing.JFrame {
 
         jcb_mon.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jcb_mon.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcb_mon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcb_monActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Lớp:");
@@ -191,6 +216,13 @@ public class QuanLyTKB extends javax.swing.JFrame {
         bt_xem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_xemActionPerformed(evt);
+            }
+        });
+
+        bt_quayve.setText("Quay Về");
+        bt_quayve.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_quayveActionPerformed(evt);
             }
         });
 
@@ -222,7 +254,9 @@ public class QuanLyTKB extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel8)
                         .addGap(18, 18, 18)
-                        .addComponent(jcb_loptkb, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jcb_loptkb, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(bt_quayve)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -232,7 +266,8 @@ public class QuanLyTKB extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel8)
-                        .addComponent(jcb_loptkb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jcb_loptkb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bt_quayve))
                     .addComponent(bt_importtkb))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -248,7 +283,7 @@ public class QuanLyTKB extends javax.swing.JFrame {
                         .addComponent(jLabel6)
                         .addComponent(bt_xem)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
                 .addGap(33, 33, 33))
         );
 
@@ -272,14 +307,15 @@ public class QuanLyTKB extends javax.swing.JFrame {
 
     private void jcb_lopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_lopActionPerformed
         // TODO add your handling code here:
+        malop =(String) jcb_lop.getSelectedItem();
     }//GEN-LAST:event_jcb_lopActionPerformed
 
     private void bt_xemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_xemActionPerformed
         // TODO add your handling code here:
-        String malop =(String) jcb_lop.getSelectedItem();
-        String mamon =(String) jcb_mon.getSelectedItem();
+        malop =(String) jcb_lop.getSelectedItem();
+        mamon =(String) jcb_mon.getSelectedItem();
         if (!malop.equals("null")&&!mamon.equals("null")) {
-            xemtdssv(malop, mamon);
+            xemdssv(malop, mamon);
         }
         else
         {
@@ -287,7 +323,58 @@ public class QuanLyTKB extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bt_xemActionPerformed
 
-    private void xemtdssv(String malop, String mamon)
+    private void bt_quayveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_quayveActionPerformed
+        // TODO add your handling code here:
+        GiaoVu gv = new GiaoVu();
+        gv.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_bt_quayveActionPerformed
+
+    private void jcb_monActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_monActionPerformed
+        // TODO add your handling code here:
+        mamon =(String) jcb_mon.getSelectedItem();
+    }//GEN-LAST:event_jcb_monActionPerformed
+
+    private void bt_themsvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_themsvActionPerformed
+        // TODO add your handling code here:
+        if(!mamon.equals(""))
+        {
+            ThemSinhVienMon gv = new ThemSinhVienMon();
+            gv.setVisible(true);
+            this.setVisible(false);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Chưa chọn mã lớp mã môn cần thêm sinh.", "Notification", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_bt_themsvActionPerformed
+
+    private void bt_xoasvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_xoasvActionPerformed
+        // TODO add your handling code here:
+        if(DiemLopMonDAO.delete(malop, mamon, mssv)==true)
+        {
+            JOptionPane.showMessageDialog(null, "Xóa sinh viên thành công.", "Notification", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_bt_xoasvActionPerformed
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        // TODO add your handling code here:
+        malop=(String) jcb_lop.getSelectedItem();
+        mamon= (String) jcb_mon.getSelectedItem();
+        int i=jTable1.getSelectedRow();
+        TableModel model=jTable2.getModel();
+        mssv=model.getValueAt(i,1).toString();
+        if(DiemLopMonDAO.delete(malop, mamon, mssv)==true)
+        {
+            JOptionPane.showMessageDialog(null, "Đã xóa thành công.", "Notification", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Chưa chọn sinh viên cần xóa.", "Notification", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jTable2MouseClicked
+
+    private void xemdssv(String malop, String mamon)
     {
         int stt = 1;
         List<SinhVien> dssv = DiemLopMonDAO.getlistsvlopmon(malop,mamon);
@@ -345,47 +432,32 @@ public class QuanLyTKB extends javax.swing.JFrame {
             int d=0;
             String mamonnoinsert="";
             try {
-                if((line = br.readLine()) != null)
-                {
-                    String[] l = line.split(cvsSplitBy);
-                    //String malop = l[0].toString();
-                    if(LopDAO.getlop(l[0])!= null)
+                while ((line = br.readLine()) != null) {                   
+                    String [] tkb = line.split(cvsSplitBy);
+                    TkbId id = new TkbId(tkb[3], tkb[0]);
+                    Tkb kb=new Tkb(id, tkb[1], tkb[2]);
+                    Mon m=new Mon(tkb[0], tkb[1]);
+                    if(MonDAO.getmon(m.getMamon())==null)
                     {
-                        JOptionPane.showMessageDialog(this, "Chưa insert lớp "+l[0]+".");
+                        MonDAO.createmon(m);
                     }
+                    if(TkbDAO.createtkb(kb)==true)
+                    { 
+                        List<SinhVien> dssv = SinhVienDAO.getlistsv(tkb[3]);
+                        for (SinhVien sv : dssv) {
+                            DiemlopmonId dlmid = new DiemlopmonId(tkb[3], tkb[0], sv.getMssv());
+                            Diemlopmon dlm = new Diemlopmon(dlmid);
+                            DiemLopMonDAO.create(dlm);
+                        }
+                        d++;
+                    }   
                     else
                     {
-                        while ((line = br.readLine()) != null) {                   
-                            String [] tkb = line.split(cvsSplitBy);
-                            TkbId id = new TkbId(tkb[3], tkb[0]);
-                            Tkb kb=new Tkb(id, tkb[1], tkb[2]);
-                            Mon m=new Mon(tkb[0], tkb[1]);
-                            if(MonDAO.getmon(m.getMamon())==null)
-                            {
-                                MonDAO.createmon(m);
-                            }
-                            if(TkbDAO.createtkb(kb)==true)
-                            { 
-                                List<SinhVien> dssv = SinhVienDAO.getlistsv(tkb[3]);
-                                for (SinhVien sv : dssv) {
-                                    DiemlopmonId dlmid = new DiemlopmonId(tkb[3], tkb[0], sv.getMssv());
-                                    Diemlopmon dlm = new Diemlopmon(dlmid);
-                                    DiemLopMonDAO.createid(dlm);
-                                }
-                                d++;
-                            }   
-                            else
-                            {
-                                mamonnoinsert=tkb[1]+",";
-                            }
-                        }
-                        JOptionPane.showMessageDialog(this, "Đã insert "+d+" môn.\nMôn chưa đưa vào:");
-//                        GiaoVu gv = new GiaoVu();
-//                        gv.setVisible(true);
-//                        this.setVisible(false);
+                        mamonnoinsert=tkb[1]+",";
                     }
                 }
-                
+                JOptionPane.showMessageDialog(this, "Đã insert "+d+" môn.\nMôn chưa đưa vào:");
+                initLayoutmon();
             } catch (IOException ex) {
                 Logger.getLogger(QuanLyLop.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -431,6 +503,7 @@ public class QuanLyTKB extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_importtkb;
+    private javax.swing.JButton bt_quayve;
     private javax.swing.JButton bt_themsv;
     private javax.swing.JButton bt_xem;
     private javax.swing.JButton bt_xoasv;

@@ -42,6 +42,7 @@ public class DoiMatKhau extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txt_passwordnew = new javax.swing.JPasswordField();
         txt_passwordnewagain = new javax.swing.JPasswordField();
+        bt_quayve = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,6 +76,13 @@ public class DoiMatKhau extends javax.swing.JFrame {
         txt_passwordnewagain.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         txt_passwordnewagain.setName("txt_password"); // NOI18N
 
+        bt_quayve.setText("Quay Về");
+        bt_quayve.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_quayveActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
         jPanel14Layout.setHorizontalGroup(
@@ -86,18 +94,22 @@ public class DoiMatKhau extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(jPanel14Layout.createSequentialGroup()
                         .addGap(55, 55, 55)
-                        .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4))
-                        .addGap(18, 18, 18)
                         .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txt_passwordnew, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_passwordnow, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_passwordnewagain, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel14Layout.createSequentialGroup()
-                        .addGap(166, 166, 166)
-                        .addComponent(bt_luu, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(bt_luu, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel4)))
+                        .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel14Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txt_passwordnew, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_passwordnow, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_passwordnewagain, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel14Layout.createSequentialGroup()
+                                .addGap(58, 58, 58)
+                                .addComponent(bt_quayve)))))
                 .addContainerGap(93, Short.MAX_VALUE))
         );
         jPanel14Layout.setVerticalGroup(
@@ -118,7 +130,9 @@ public class DoiMatKhau extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(txt_passwordnewagain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addComponent(bt_luu)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bt_luu)
+                    .addComponent(bt_quayve))
                 .addGap(21, 21, 21))
         );
 
@@ -173,6 +187,21 @@ public class DoiMatKhau extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_bt_luuActionPerformed
+
+    private void bt_quayveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_quayveActionPerformed
+        // TODO add your handling code here:
+        if(account.getUser().equals("giaovu"))
+        {
+            GiaoVu gv = new GiaoVu();
+            gv.setVisible(true);
+            this.setVisible(false);
+        }
+        else{
+            SinhVien sv = new SinhVien();
+            sv.setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_bt_quayveActionPerformed
     
     private boolean kiemtra(String passnow, String passnew, String passnewagain) {
         boolean kiemtra = false;
@@ -205,6 +234,7 @@ public class DoiMatKhau extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_luu;
+    private javax.swing.JButton bt_quayve;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

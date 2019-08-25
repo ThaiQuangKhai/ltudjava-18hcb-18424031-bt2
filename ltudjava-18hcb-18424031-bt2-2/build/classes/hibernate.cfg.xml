@@ -47,6 +47,12 @@ Contributor(s):
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">root</property>
     <mapping resource="POJOS/Account.hbm.xml"/>
-    <!--<mapping class=""-->
+    <mapping resource="POJOS/SinhVien.hbm.xml"/>
+    <mapping resource="POJOS/Lop.hbm.xml"/>
+    <mapping resource="POJOS/Mon.hbm.xml"/>
+    <mapping resource="POJOS/DiemLopMon.hbm.xml"/>
+    <mapping resource="POJOS/Tkb.hbm.xml"/>
+    <mapping resource="POJOS/Taophuckhaodiem.hbm.xml"/>
+    <mapping resource="POJOS/Xinphuckhaodiem.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

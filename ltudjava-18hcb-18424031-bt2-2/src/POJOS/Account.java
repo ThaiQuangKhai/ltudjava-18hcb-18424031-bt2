@@ -12,12 +12,27 @@ package POJOS;
 public class Account {
     private String user;
     private String password;
+
+    /**
+     *
+     */
     public Account(){
         
     }
+
+    /**
+     *
+     * @param user
+     */
     public Account(String user){
         this.user = user;
     }
+
+    /**
+     *
+     * @param user
+     * @param password
+     */
     public Account(String user,String password){
         this.user=user;
         this.password=password;

@@ -71,6 +71,22 @@ public class DiemLopMonDAO {
         return listsv;
     }
     
+    public static List<Object[]> getlistdiemsv(String mssv) {
+        Session session = Controller.getSessionFactory().openSession();
+        List<Object[]> listsv = null;
+        try {
+            
+            String hql = "select dlm.id.malop, dlm.id.mamon, m.tenmon, dlm.diemgk, dlm.diemck, dlm.diemkhac, dlm.diemtong from Diemlopmon dlm, Mon m where dlm.id.mssv='"+mssv+"' and dlm.id.mamon=m.mamon";
+            Query query = session.createQuery(hql);
+            listsv = query.list();
+        } catch (HibernateException ex) {
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return listsv;
+    }
+    
     public static boolean create(Diemlopmon dlm) {
         Session session = Controller.getSessionFactory().openSession();
         Transaction transaction = null;
@@ -129,7 +145,7 @@ public class DiemLopMonDAO {
         Session session = Controller.getSessionFactory().openSession();
         Diemlopmon lopmonsv = null;
         try {
-            String hql = "select lmsv from Diemlopmon lmsv where lmsv.malop='"+dlm.getId().getMalop()+"' and lmsv.mamon='"+dlm.getId().getMamon()+"' and lmsv.mssv='"+dlm.getId().getMssv()+"'";
+            String hql = "select lmsv from Diemlopmon lmsv where lmsv.id.malop='"+dlm.getId().getMalop()+"' and lmsv.id.mamon='"+dlm.getId().getMamon()+"' and lmsv.id.mssv='"+dlm.getId().getMssv()+"'";
             Query query = session.createQuery(hql);
             lopmonsv = (Diemlopmon) query.uniqueResult();
         } catch (HibernateException ex) {
@@ -138,5 +154,21 @@ public class DiemLopMonDAO {
             session.close();
         }
         return lopmonsv;
+    }
+    
+    public static boolean delete(String malop, String maon, String mssv) {
+        Session session = Controller.getSessionFactory().openSession();
+        Transaction transaction = session.getTransaction();
+        try {
+            String hql = "delete lmsv from Diemlopmon lmsv where lmsv.id.malop='"+malop+"' and lmsv.id.mamon='"+maon+"' and lmsv.id.mssv='"+mssv+"'";
+            Query query = session.createQuery(hql);
+            query.executeUpdate();
+            transaction.commit();
+        } catch (HibernateException ex) {
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return true;
     }
 }

@@ -20,6 +20,7 @@ import POJOS.Mon;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -33,6 +34,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public class QuanLyDiem extends javax.swing.JFrame {
 
+    static String malop="";
+    static String mamon="";
+    static String mssv="";
+    static String hoten="";
     private String[] columnNames = {
         "STT", "MSSV", "Họ Tên", "Điểm GK", "Điểm CK", "Điểm Khác", "Điểm Tổng", ""
     };
@@ -43,6 +48,7 @@ public class QuanLyDiem extends javax.swing.JFrame {
         initComponents();
         initLayoutlop();
         initLayoutmon();
+        malop="";
     }
 
     private void initLayoutlop() {
@@ -52,7 +58,6 @@ public class QuanLyDiem extends javax.swing.JFrame {
             DefaultComboBoxModel comboboxModel = new DefaultComboBoxModel();
             //System.out.println("có");
             for (Lop l : DSLop) {
-                Lop _l = LopDAO.getlop(l.getMalop());
                 comboboxModel.addElement(l.getMalop());
             }
             jcb_lop.setModel(comboboxModel);
@@ -69,7 +74,6 @@ public class QuanLyDiem extends javax.swing.JFrame {
             DefaultComboBoxModel comboboxModel = new DefaultComboBoxModel();
             //System.out.println("có");
             for (Mon m : DSmon) {
-                //Mon _m = MonDAO.getmon(m.getMamon());
                 comboboxModel.addElement(m.getMamon());
             }
             jcb_mon.setModel(comboboxModel);
@@ -90,7 +94,7 @@ public class QuanLyDiem extends javax.swing.JFrame {
 
         bt_import = new javax.swing.JButton();
         bt_xemdiem = new javax.swing.JButton();
-        jButton22 = new javax.swing.JButton();
+        bt_suadiem = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jcb_lop = new javax.swing.JComboBox();
         jLabel7 = new javax.swing.JLabel();
@@ -127,9 +131,14 @@ public class QuanLyDiem extends javax.swing.JFrame {
             }
         });
 
-        jButton22.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton22.setText("Sửa Điểm");
-        jButton22.setName("bt_suadiem"); // NOI18N
+        bt_suadiem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_suadiem.setText("Sửa Điểm");
+        bt_suadiem.setName("bt_suadiem"); // NOI18N
+        bt_suadiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_suadiemActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Lớp:");
@@ -164,6 +173,11 @@ public class QuanLyDiem extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable1);
 
         bt_quayve.setText("Quay Về");
@@ -239,7 +253,7 @@ public class QuanLyDiem extends javax.swing.JFrame {
                                 .addGap(0, 167, Short.MAX_VALUE)
                                 .addComponent(bt_xemdiem)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton22))
+                                .addComponent(bt_suadiem))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
@@ -274,7 +288,7 @@ public class QuanLyDiem extends javax.swing.JFrame {
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bt_xemdiem)
-                    .addComponent(jButton22)
+                    .addComponent(bt_suadiem)
                     .addComponent(jLabel6)
                     .addComponent(jcb_lop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
@@ -310,8 +324,8 @@ public class QuanLyDiem extends javax.swing.JFrame {
 
     private void bt_xemdiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_xemdiemActionPerformed
         // TODO add your handling code here:
-        String malop =(String) jcb_lop.getSelectedItem();
-        String mamon =(String) jcb_mon.getSelectedItem();
+        malop =(String) jcb_lop.getSelectedItem();
+        mamon =(String) jcb_mon.getSelectedItem();
         if (!malop.equals("null")&&!mamon.equals("null")) {
             xemdsdiem(malop, mamon);
         }
@@ -319,7 +333,33 @@ public class QuanLyDiem extends javax.swing.JFrame {
         {
             JOptionPane.showMessageDialog(null, "Chưa chọn mã lớp, mã môn.", "Notification", JOptionPane.WARNING_MESSAGE);
         }
+        malop="";
+        mssv="";
     }//GEN-LAST:event_bt_xemdiemActionPerformed
+
+    private void bt_suadiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_suadiemActionPerformed
+        // TODO add your handling code here:
+        if(!malop.equals("")&&!mssv.equals(""))
+        {
+            SuaDiem1 sd =new SuaDiem1();
+            sd.setVisible(true);
+            this.setVisible(false);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Chưa chọn sinh viện cần sửa.", "Notification", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_bt_suadiemActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        malop =(String) jcb_lop.getSelectedItem();
+        mamon =(String) jcb_mon.getSelectedItem();
+        int i=jTable1.getSelectedRow();
+        TableModel model=jTable1.getModel();
+        mssv=model.getValueAt(i,1).toString();
+        hoten=model.getValueAt(i,2).toString();
+    }//GEN-LAST:event_jTable1MouseClicked
 
     private void xemdsdiem(String malop, String mamon)
     {
@@ -458,8 +498,8 @@ public class QuanLyDiem extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_import;
     private javax.swing.JButton bt_quayve;
+    private javax.swing.JButton bt_suadiem;
     private javax.swing.JButton bt_xemdiem;
-    private javax.swing.JButton jButton22;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

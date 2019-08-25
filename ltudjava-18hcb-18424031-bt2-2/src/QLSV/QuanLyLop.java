@@ -1,18 +1,24 @@
 package QLSV;
 
-import DAO.SinhVienDAO;
-import POJOS.SinhVien;
 import DAO.LopDAO;
+import DAO.SinhVienDAO;
+import DAO.AccountDAO;
 import POJOS.Lop;
+import POJOS.SinhVien;
+import POJOS.Account;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -26,13 +32,35 @@ import javax.swing.JOptionPane;
  */
 public class QuanLyLop extends javax.swing.JFrame {
 
+    static String malop="";
+    private String[] columnNames = {
+        "STT", "Mã sinh viên", "Họ Tên", "Giới Tính", "CMND"
+    };
     /**
      * Creates new form QuanLyLop
      */
     public QuanLyLop() {
         initComponents();
+        initLayoutlop();
+        this.bt_xoasv.setVisible(false);
+        this.lbl_malop.setVisible(false);
     }
-
+    private void initLayoutlop() {
+        List<Lop> DSLop = LopDAO.getlistlop();
+        if(DSLop.size()>0)
+        {
+            DefaultComboBoxModel comboboxModel = new DefaultComboBoxModel();
+            //System.out.println("có");
+            for (Lop l : DSLop) {
+                Lop _l = LopDAO.getlop(l.getMalop());
+                comboboxModel.addElement(l.getMalop());
+            }
+            jcb_lop.setModel(comboboxModel);
+        } else 
+        {
+            jcb_lop.setModel(new javax.swing.DefaultComboBoxModel(new String[]{}));
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -48,7 +76,9 @@ public class QuanLyLop extends javax.swing.JFrame {
         bt_themsv = new javax.swing.JButton();
         bt_xoasv = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jcbClass = new javax.swing.JComboBox();
+        jcb_lop = new javax.swing.JComboBox();
+        lbl_malop = new javax.swing.JLabel();
+        bt_quayve = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,6 +102,11 @@ public class QuanLyLop extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         bt_themsv.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -86,12 +121,31 @@ public class QuanLyLop extends javax.swing.JFrame {
         bt_xoasv.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         bt_xoasv.setText("Xóa Sinh Viên");
         bt_xoasv.setName("bt_xoasv"); // NOI18N
+        bt_xoasv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_xoasvActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Lớp:");
 
-        jcbClass.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jcbClass.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcb_lop.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jcb_lop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcb_lop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcb_lopActionPerformed(evt);
+            }
+        });
+
+        lbl_malop.setText("-1");
+
+        bt_quayve.setText("Quay Về");
+        bt_quayve.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_quayveActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,30 +160,39 @@ public class QuanLyLop extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jcbClass, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jcb_lop, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(bt_importdslop, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bt_themsv)
-                        .addGap(18, 18, 18)
-                        .addComponent(bt_xoasv)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 233, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(bt_xoasv)
+                                .addGap(18, 18, 18)
+                                .addComponent(bt_themsv))
+                            .addComponent(bt_quayve, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbl_malop)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(bt_importdslop)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 151, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bt_importdslop)
+                    .addComponent(bt_quayve))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbl_malop)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(bt_xoasv)
                         .addComponent(bt_themsv))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6)
-                        .addComponent(jcbClass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jcb_lop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -137,7 +200,16 @@ public class QuanLyLop extends javax.swing.JFrame {
 
     private void bt_themsvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_themsvActionPerformed
         // TODO add your handling code here:
-        
+        if(!malop.equals(""))
+        {
+            ThemSinhVien tsv = new ThemSinhVien();
+            tsv.setVisible(true);
+            this.setVisible(false);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Chưa chọn lớp cần thêm sinh viên.", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_bt_themsvActionPerformed
 
     private void bt_importdslopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_importdslopActionPerformed
@@ -145,6 +217,68 @@ public class QuanLyLop extends javax.swing.JFrame {
         ChosseFile("Choose file import");
     }//GEN-LAST:event_bt_importdslopActionPerformed
 
+    private void jcb_lopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_lopActionPerformed
+        // TODO add your handling code here:
+        //String malop = String.valueOf(jcb_lop.getItemAt(jcb_lop.getSelectedIndex()));
+        malop =(String) jcb_lop.getSelectedItem();
+        if (!malop.equals("null")) {
+            xemdslop(malop);
+        } else {
+            JOptionPane.showMessageDialog(null, "Chưa có danh sách lớp học.", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jcb_lopActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int i=jTable1.getSelectedRow();
+        TableModel model=jTable1.getModel();
+        lbl_malop.setText(model.getValueAt(i,1).toString());
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void bt_quayveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_quayveActionPerformed
+        // TODO add your handling code here:
+        GiaoVu gv = new GiaoVu();
+        gv.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_bt_quayveActionPerformed
+
+    private void bt_xoasvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_xoasvActionPerformed
+        // TODO add your handling code here:
+        String mssv=lbl_malop.getText();
+        if(mssv.equals("-1")||mssv.equals(""))
+        {
+            JOptionPane.showMessageDialog(this, "Chưa chọn sinh viên cần xóa.");
+        }
+        else{
+            if(SinhVienDAO.deletesvlop(mssv)==true)
+            {
+                JOptionPane.showMessageDialog(this, "Xóa thành công.");
+                lbl_malop.setText("");
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Xóa thất bại.");
+            }
+        }
+    }//GEN-LAST:event_bt_xoasvActionPerformed
+
+    private void xemdslop(String malop) {
+        int stt = 1;
+        List<SinhVien> dssv = SinhVienDAO.getlistsv(malop);
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.setColumnIdentifiers(columnNames);
+        for (SinhVien sv : dssv) {
+            String[] rows = new String[5];
+            rows[0] = String.valueOf(stt);
+            rows[1] = sv.getMssv();
+            rows[2] = sv.getHoten();
+            rows[3] = sv.getGt();
+            rows[4] = sv.getCmnd();
+            tableModel.addRow(rows);
+            stt++;
+        }
+        jTable1.setModel(tableModel);
+    }
+    
     private void ChosseFile(String choose_file_import) {
         JFileChooser fileChooser = new JFileChooser();
         //fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
@@ -175,8 +309,10 @@ public class QuanLyLop extends javax.swing.JFrame {
                         while ((line = br.readLine()) != null) {                   
                             String [] sv = line.split(cvsSplitBy);
                             SinhVien insertsv = new SinhVien(sv[0], sv[1], sv[2], sv[3], sv[4]);
-                            if(SinhVienDAO.createSinhVien(insertsv)==true)
+                            Account inserta =new Account(sv[0], sv[0]);
+                            if(SinhVienDAO.createSinhVien(insertsv)==true&&AccountDAO.createaccount(inserta)==true)
                             {
+                                //&&AccountDAO.createaccount(inserta)==true
                                 d++;       
                             }   
                             else
@@ -186,16 +322,14 @@ public class QuanLyLop extends javax.swing.JFrame {
                         }
                     }
                 }
-                JOptionPane.showMessageDialog(this, "Đã insert " + d+" Sinh viên.\nMã sinh viên chưa đưa vào:");
-                GiaoVu gv = new GiaoVu();
-                gv.setVisible(true);
-                this.setVisible(false);
+                JOptionPane.showMessageDialog(this, "Đã insert " + d+" Sinh viên.\nMã sinh viên chưa đưa vào:"+mssvnoinsert);
             } catch (IOException ex) {
                 Logger.getLogger(QuanLyLop.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(QuanLyLop.class.getName()).log(Level.SEVERE, null, ex);
         }
+        initLayoutlop();
     }
     
     /**
@@ -235,11 +369,13 @@ public class QuanLyLop extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_importdslop;
+    private javax.swing.JButton bt_quayve;
     private javax.swing.JButton bt_themsv;
     private javax.swing.JButton bt_xoasv;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JComboBox jcbClass;
+    private javax.swing.JComboBox jcb_lop;
+    private javax.swing.JLabel lbl_malop;
     // End of variables declaration//GEN-END:variables
 }

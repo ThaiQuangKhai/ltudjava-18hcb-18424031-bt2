@@ -18,7 +18,8 @@ import POJOS.DiemlopmonId;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-
+import static QLSV.QuanLyTKB.malop;
+import static QLSV.QuanLyTKB.mamon;
 
 /**
  *
@@ -33,40 +34,20 @@ public class ThemSinhVienMon extends javax.swing.JDialog {
         initComponents();
         initLayoutlop();
         initLayoutmon();
+        jcb_lop.setEnabled(false);
+        jcb_mon.setEnabled(false);
     }
 
     private void initLayoutlop() {
-        List<Lop> DSLop = LopDAO.getlistlop();
-        if(DSLop.size()>0)
-        {
-            DefaultComboBoxModel comboboxModel = new DefaultComboBoxModel();
-            //System.out.println("có");
-            for (Lop l : DSLop) {
-                Lop _l = LopDAO.getlop(l.getMalop());
-                comboboxModel.addElement(l.getMalop());
-            }
-            jcb_lop.setModel(comboboxModel);
-        } else 
-        {
-            jcb_lop.setModel(new javax.swing.DefaultComboBoxModel(new String[]{}));
-        }
+        DefaultComboBoxModel comboboxModel = new DefaultComboBoxModel();
+        comboboxModel.addElement(malop);
+        jcb_lop.setModel(comboboxModel);
     }
     
     private void initLayoutmon() {
-        List<Mon> DSMon = MonDAO.getlistmon();
-        if(DSMon.size()>0)
-        {
-            DefaultComboBoxModel comboboxModel = new DefaultComboBoxModel();
-            //System.out.println("có");
-            for (Mon m : DSMon) {
-                Lop _m = LopDAO.getlop(m.getMamon());
-                comboboxModel.addElement(m.getMamon());
-            }
-            jcb_mon.setModel(comboboxModel);
-        } else 
-        {
-            jcb_mon.setModel(new javax.swing.DefaultComboBoxModel(new String[]{}));
-        }
+        DefaultComboBoxModel comboboxModel = new DefaultComboBoxModel();
+        comboboxModel.addElement(mamon);
+        jcb_mon.setModel(comboboxModel);
     }
 
     /**

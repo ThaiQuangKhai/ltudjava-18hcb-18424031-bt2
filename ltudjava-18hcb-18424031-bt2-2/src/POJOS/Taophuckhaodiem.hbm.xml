@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 24, 2019 9:43:46 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="POJOS.Taophuckhaodiem" table="taophuckhaodiem" catalog="qlsinhvien" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="ngaybd" type="date">
+            <column name="NGAYBD" length="10" />
+        </property>
+        <property name="ngaykt" type="date">
+            <column name="NGAYKT" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

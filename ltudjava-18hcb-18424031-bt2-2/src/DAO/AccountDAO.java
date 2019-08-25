@@ -16,6 +16,12 @@ import org.hibernate.Transaction;
  * @author DELL
  */
 public class AccountDAO {
+
+    /**
+     *
+     * @param userName
+     * @return
+     */
     public static Account getAccount(String userName) {
         Session session = Controller.getSessionFactory().openSession();
         Account account = null;
@@ -28,6 +34,12 @@ public class AccountDAO {
         }
         return account;
     }
+
+    /**
+     *
+     * @param a
+     * @return
+     */
     public static boolean updateAccount(Account a) {
         Session session = Controller.getSessionFactory().openSession();
         Transaction transaction = null;
@@ -37,6 +49,25 @@ public class AccountDAO {
             session.update(a);
             transaction.commit();
         } catch(HibernateException ex) {
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return true;
+    }
+    
+    public static boolean createaccount(Account a) {
+        Session session = Controller.getSessionFactory().openSession();
+        if (AccountDAO.getAccount(a.getUser())!= null) {
+            return false;
+        }
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.save(a);
+            transaction.commit();
+        } catch (HibernateException ex) {
+            transaction.rollback();
             System.err.println(ex);
         } finally {
             session.close();
