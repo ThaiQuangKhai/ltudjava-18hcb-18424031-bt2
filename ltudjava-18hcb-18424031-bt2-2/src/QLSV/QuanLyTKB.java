@@ -351,27 +351,35 @@ public class QuanLyTKB extends javax.swing.JFrame {
 
     private void bt_xoasvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_xoasvActionPerformed
         // TODO add your handling code here:
-        if(DiemLopMonDAO.delete(malop, mamon, mssv)==true)
+        if(!mssv.equals(""))
         {
-            JOptionPane.showMessageDialog(null, "Xóa sinh viên thành công.", "Notification", JOptionPane.WARNING_MESSAGE);
+            if(DiemLopMonDAO.delete(malop, mamon, mssv)==true)
+            {
+                JOptionPane.showMessageDialog(null, "Đã xóa thành công.", "Notification", JOptionPane.WARNING_MESSAGE);
+            }
         }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Chưa chọn sinh viên cần xóa.", "Notification", JOptionPane.WARNING_MESSAGE);
+        }
+        mssv="";
     }//GEN-LAST:event_bt_xoasvActionPerformed
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
         // TODO add your handling code here:
         malop=(String) jcb_lop.getSelectedItem();
         mamon= (String) jcb_mon.getSelectedItem();
-        int i=jTable1.getSelectedRow();
+        int i=jTable2.getSelectedRow();
         TableModel model=jTable2.getModel();
         mssv=model.getValueAt(i,1).toString();
-        if(DiemLopMonDAO.delete(malop, mamon, mssv)==true)
-        {
-            JOptionPane.showMessageDialog(null, "Đã xóa thành công.", "Notification", JOptionPane.WARNING_MESSAGE);
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "Chưa chọn sinh viên cần xóa.", "Notification", JOptionPane.WARNING_MESSAGE);
-        }
+//        if(DiemLopMonDAO.delete(malop, mamon, mssv)==true)
+//        {
+//            JOptionPane.showMessageDialog(null, "Đã xóa thành công.", "Notification", JOptionPane.WARNING_MESSAGE);
+//        }
+//        else
+//        {
+//            JOptionPane.showMessageDialog(null, "Chưa chọn sinh viên cần xóa.", "Notification", JOptionPane.WARNING_MESSAGE);
+//        }
     }//GEN-LAST:event_jTable2MouseClicked
 
     private void xemdssv(String malop, String mamon)
@@ -444,9 +452,10 @@ public class QuanLyTKB extends javax.swing.JFrame {
                     if(TkbDAO.createtkb(kb)==true)
                     { 
                         List<SinhVien> dssv = SinhVienDAO.getlistsv(tkb[3]);
+                        float dk=0;
                         for (SinhVien sv : dssv) {
                             DiemlopmonId dlmid = new DiemlopmonId(tkb[3], tkb[0], sv.getMssv());
-                            Diemlopmon dlm = new Diemlopmon(dlmid);
+                            Diemlopmon dlm = new Diemlopmon(dlmid, dk, dk, dk, dk);
                             DiemLopMonDAO.create(dlm);
                         }
                         d++;

@@ -58,7 +58,7 @@ public class SinhVienXemDiem extends javax.swing.JFrame {
                 rows[5] = d[4].toString();
                 rows[6] = d[5].toString();
                 rows[7] = d[6].toString();
-                if(Float.parseFloat(d[5].toString())>=5)
+                if(Float.parseFloat(d[6].toString())>=5)
                 {
                     rows[8] = "Đậu";
                 }
@@ -175,7 +175,7 @@ public class SinhVienXemDiem extends javax.swing.JFrame {
             Taophuckhaodiem id=TaoPhucKhaoDiemDAO.getpk();
             idpk=id.getId();
 
-            XinPhucKhao a = new XinPhucKhao();
+            XinPhucKhao1 a = new XinPhucKhao1();
             a.setVisible(true);
             this.setVisible(false);
         }

@@ -160,7 +160,9 @@ public class DiemLopMonDAO {
         Session session = Controller.getSessionFactory().openSession();
         Transaction transaction = session.getTransaction();
         try {
-            String hql = "delete lmsv from Diemlopmon lmsv where lmsv.id.malop='"+malop+"' and lmsv.id.mamon='"+maon+"' and lmsv.id.mssv='"+mssv+"'";
+//            Query q = session.createQuery("delete from Diemlopmon lmsv where lmsv.id.malop='"+malop+"' and lmsv.id.mamon='"+maon+"' and lmsv.id.mssv='"+mssv+"'");
+//            q.executeUpdate();
+            String hql = "delete from Diemlopmon lmsv where lmsv.id.malop='"+malop+"' and lmsv.id.mamon='"+maon+"' and lmsv.id.mssv='"+mssv+"'";
             Query query = session.createQuery(hql);
             query.executeUpdate();
             transaction.commit();

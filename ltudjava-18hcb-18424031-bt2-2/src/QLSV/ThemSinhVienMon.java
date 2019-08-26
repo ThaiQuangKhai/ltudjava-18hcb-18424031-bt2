@@ -185,9 +185,9 @@ public class ThemSinhVienMon extends javax.swing.JDialog {
         String malop = String.valueOf(jcb_lop.getItemAt(jcb_lop.getSelectedIndex()));
         String mamon = String.valueOf(jcb_mon.getItemAt(jcb_mon.getSelectedIndex()));
         if (!malop.isEmpty()) {
-            
+            float dk=0;
             DiemlopmonId dlmid = new DiemlopmonId(malop, mamon, mssv);
-            Diemlopmon dlm = new Diemlopmon(dlmid);
+            Diemlopmon dlm = new Diemlopmon(dlmid, dk, dk, dk, dk);
             DiemLopMonDAO.create(dlm);
             if(DiemLopMonDAO.create(dlm)==true)
             {

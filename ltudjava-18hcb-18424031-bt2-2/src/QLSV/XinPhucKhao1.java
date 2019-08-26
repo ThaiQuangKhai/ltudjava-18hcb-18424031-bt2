@@ -290,7 +290,7 @@ public class XinPhucKhao1 extends javax.swing.JFrame {
 
     private void bt_quayveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_quayveActionPerformed
         // TODO add your handling code here:
-        QuanLyDiem qld = new QuanLyDiem();
+        SinhVien qld = new SinhVien();
         qld.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_bt_quayveActionPerformed

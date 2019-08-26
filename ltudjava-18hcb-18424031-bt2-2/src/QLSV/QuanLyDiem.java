@@ -432,12 +432,6 @@ public class QuanLyDiem extends javax.swing.JFrame {
             String malop = null;
             String mamon = null;
             try {
-                if((line = br.readLine()) != null)
-                {
-                    String [] dlm = line.split(cvsSplitBy);
-                    malop=dlm[0];
-                    mamon=dlm[1];
-                }
                 while ((line = br.readLine()) != null) {                   
                     String [] dlm = line.split(cvsSplitBy);
                     DiemlopmonId dlmid = new DiemlopmonId(dlm[6], dlm[7], dlm[0]);

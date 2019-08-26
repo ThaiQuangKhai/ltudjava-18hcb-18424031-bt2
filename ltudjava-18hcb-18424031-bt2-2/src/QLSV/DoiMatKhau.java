@@ -172,9 +172,6 @@ public class DoiMatKhau extends javax.swing.JFrame {
                 if(AccountDAO.updateAccount(account)==true)
                 {
                     JOptionPane.showMessageDialog(this, "Đổi mật khẩu thành công.");
-                    GiaoVu gv = new GiaoVu();
-                    gv.setVisible(true);
-                    this.setVisible(false);
                 }
             }
             else
